@@ -3,24 +3,127 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <title>Twiddler</title>
+
   </head>
   <body>
     <script>
 
       $(document).ready(function(){
+
         var $body = $('body');
-        $body.html('');
+
+        var $title = $('<h1 class="header"></h1>');
+        $title.text('Twiddler');
+        $title.appendTo($body);
+
+        var $newTweetsBtn = $('<button class="newTweets"></button>');
+        $newTweetsBtn.text('New Tweets');
+        $newTweetsBtn.appendTo($body);
+
+        var $homeBtn = $('<button class="home"></button>');
+        $homeBtn.text('Home');
+        $homeBtn.hide().appendTo($body);
+
+        $homeBtn.click(function() {
+          $(".userFeed").hide();
+          $(".feed").show();
+          $(".newTweets").show();
+          $(".home").hide();
+        })
+
+        // var $addTweetsBtn = $('<button id="addTweets"></button>');
+        // $addTweetsBtn.text('Tweet');
+        // $addTweetsBtn.appendTo($body);
+
+        var $followingTitle = $('<h2 class="following"></h2>');
+        $followingTitle.text('Following');
+        $followingTitle.appendTo($body);
+
+        var $following = $('<div class="following"></div>');
+        $following.appendTo($body);
+
+        for (let users in streams.users) {
+            var followingUser = users;
+            var $followingUser = $('<div class="user"></div>');
+            $followingUser.text(followingUser).appendTo($following);
+          }
+
+        var $feedTitle = $('<h2 class="feed"></h2>');
+        $feedTitle.text('Feed');
+        $feedTitle.appendTo($body);
+
+        var $feed = $('<div class="feed"></div>');
 
         var index = streams.home.length - 1;
-        while(index >= 0){
+        var feedLength = 0;
+
+        while(index >= 0) {
+          var $container = $('<div class="container"></div>');
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $('<div class="tweets"></div>');
+          var createdAt = tweet.created_at;
+          var $createdAt = $('<div class="createdAt"></div>');
+          var user = tweet.user;
+          var $user = $('<div class="user"></div>');
+
+          $user.text('@' + tweet.user + ':').attr('data-user');
+          $tweet.text(tweet.message);
+          $createdAt.text(createdAt);
+
+          $user.appendTo($container);
+          $createdAt.appendTo($container);
+          $tweet.appendTo($container);
+
+          $container.appendTo($feed);
+
           index -= 1;
+          feedLength += 1;
         }
 
-      });
+        $feed.appendTo($body);
+
+        $newTweetsBtn.click(function() {
+          var index = streams.home.length - 1;
+          while(index >= feedLength) {
+            var $container = $('<div class="container"></div>');
+            var tweet = streams.home[index];
+            var $tweet = $('<div class="tweets"></div>');
+            var createdAt = tweet.created_at;
+            var $createdAt = $('<div class="createdAt"></div>');
+            var user = tweet.user;
+            var $user = $('<div class="user"></div>');
+
+            $user.text('@' + tweet.user + ':').attr('data-user');
+            $tweet.text(tweet.message);
+            $createdAt.text(createdAt);
+
+            $user.appendTo($container);
+            $createdAt.appendTo($container);
+            $tweet.appendTo($container);
+
+            $container.prependTo($feed);
+            index -= 1;
+            feedLength += 1;
+          }
+        })
+
+        $(".user").click(function() {
+          var username;
+
+          var $userFeed = $('<div class="userFeed"></div>');
+
+          var $userFeedTitle = $('<h2 class="userFeed"></h2>');
+          $userFeedTitle.text(username + ' \'s Feed');
+          $userFeedTitle.appendTo($body);
+
+          $(".feed").hide();
+          $(".newTweets").hide();
+          $(".home").show();
+
+        })
+
+    });
 
     </script>
   </body>
