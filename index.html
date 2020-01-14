@@ -3,6 +3,7 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link rel="stylesheet" href="main.css">
     <title>Twiddler</title>
 
   </head>
@@ -17,11 +18,15 @@
         $title.text('Twiddler');
         $title.appendTo($body);
 
-        var $newTweetsBtn = $('<button class="newTweets"></button>');
+        // var $addTweetsBtn = $('<button id="addTweets"></button>');
+        // $addTweetsBtn.text('Tweet');
+        // $addTweetsBtn.appendTo($body);
+
+        var $newTweetsBtn = $('<button class="newTweets header"></button>');
         $newTweetsBtn.text('New Tweets');
         $newTweetsBtn.appendTo($body);
 
-        var $homeBtn = $('<button class="home"></button>');
+        var $homeBtn = $('<button class="home header"></button>');
         $homeBtn.text('Home');
         $homeBtn.hide().appendTo($body);
 
@@ -32,10 +37,6 @@
           $(".home").hide();
         })
 
-        // var $addTweetsBtn = $('<button id="addTweets"></button>');
-        // $addTweetsBtn.text('Tweet');
-        // $addTweetsBtn.appendTo($body);
-
         var $followingTitle = $('<h2 class="following"></h2>');
         $followingTitle.text('Following');
         $followingTitle.appendTo($body);
@@ -44,16 +45,17 @@
         $following.appendTo($body);
 
         for (let users in streams.users) {
-            var followingUser = users;
-            var $followingUser = $('<div class="user"></div>');
-            $followingUser.text(followingUser).appendTo($following);
-          }
+          var followingUser = users + '\n';
+          var $followingUser = $('<section class="user following"></section>');
+          $followingUser.text(followingUser).appendTo($following);
+        }
 
         var $feedTitle = $('<h2 class="feed"></h2>');
         $feedTitle.text('Feed');
         $feedTitle.appendTo($body);
 
         var $feed = $('<div class="feed"></div>');
+        $feed.appendTo($body);
 
         var index = streams.home.length - 1;
         var feedLength = 0;
@@ -80,8 +82,6 @@
           index -= 1;
           feedLength += 1;
         }
-
-        $feed.appendTo($body);
 
         $newTweetsBtn.click(function() {
           var index = streams.home.length - 1;
@@ -122,6 +122,8 @@
           $(".home").show();
 
         })
+
+        $("div").css("margin","auto");
 
     });
 

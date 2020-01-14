@@ -1,0 +1,37 @@
+html, body {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+  background-color: lightblue;
+}
+
+div {
+  margin: auto;
+}
+
+.container:nth-child(odd) {
+  background-color: white;
+  padding: 10px
+}
+
+.container:nth-child(even) {
+  background-color: cornflowerblue;
+  padding: 10px
+}
+
+.user {
+  font-weight: bold;
+}
+
+.createdAt {
+  font-size: small;
+  font-style: italic;
+}
