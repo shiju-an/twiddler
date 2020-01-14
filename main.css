@@ -10,7 +10,8 @@ html {
 body {
   display: table-cell;
   vertical-align: middle;
-  background-color: lightblue;
+  background-color: violet;
+  color: white;
 }
 
 div {
@@ -18,13 +19,17 @@ div {
 }
 
 .container:nth-child(odd) {
-  background-color: white;
-  padding: 10px
+  background-color: lightblue;
+  border: solid;
+  border-radius: 12px;
+  padding: 1rem;
 }
 
 .container:nth-child(even) {
-  background-color: cornflowerblue;
-  padding: 10px
+  background-color: pink;
+  border: solid;
+  border-radius: 12px;
+  padding: 1rem;
 }
 
 .user {

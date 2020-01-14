@@ -45,9 +45,9 @@
         $following.appendTo($body);
 
         for (let users in streams.users) {
-          var followingUser = users + '\n';
+          var followingUser = users;
           var $followingUser = $('<section class="user following"></section>');
-          $followingUser.text(followingUser).appendTo($following);
+          $followingUser.text('@' + followingUser + '\n').appendTo($following);
         }
 
         var $feedTitle = $('<h2 class="feed"></h2>');
@@ -86,30 +86,30 @@
         $newTweetsBtn.click(function() {
           var index = streams.home.length - 1;
           while(index >= feedLength) {
-            var $container = $('<div class="container"></div>');
-            var tweet = streams.home[index];
-            var $tweet = $('<div class="tweets"></div>');
-            var createdAt = tweet.created_at;
-            var $createdAt = $('<div class="createdAt"></div>');
-            var user = tweet.user;
-            var $user = $('<div class="user"></div>');
+            var $newContainer = $('<div class="container"></div>');
+            var newTweet = streams.home[index];
+            var $newTweet = $('<div class="tweets"></div>');
+            var newCreatedAt = newTweet.created_at;
+            var $newCreatedAt = $('<div class="createdAt"></div>');
+            var newUser = newTweet.user;
+            var $newUser = $('<div class="user"></div>');
 
-            $user.text('@' + tweet.user + ':').attr('data-user');
-            $tweet.text(tweet.message);
-            $createdAt.text(createdAt);
+            $newUser.text('@' + newTweet.user + ':').attr('data-user');
+            $newTweet.text(newTweet.message);
+            $newCreatedAt.text(createdAt);
 
-            $user.appendTo($container);
-            $createdAt.appendTo($container);
-            $tweet.appendTo($container);
+            $newUser.appendTo($newContainer);
+            $newCreatedAt.appendTo($newContainer);
+            $newTweet.appendTo($newContainer);
 
-            $container.prependTo($feed);
+            $newContainer.prependTo($feed);
             index -= 1;
             feedLength += 1;
           }
         })
 
         $(".user").click(function() {
-          var username;
+          var username = $(this).data('user');
 
           var $userFeed = $('<div class="userFeed"></div>');
 
@@ -126,6 +126,7 @@
         $("div").css("margin","auto");
 
     });
+
 
     </script>
   </body>
