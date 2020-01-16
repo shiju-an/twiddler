@@ -37,19 +37,6 @@
           $(".home").hide();
         })
 
-        var $followingTitle = $('<h2 class="following"></h2>');
-        $followingTitle.text('Following');
-        $followingTitle.appendTo($body);
-
-        var $following = $('<div class="following"></div>');
-        $following.appendTo($body);
-
-        for (let users in streams.users) {
-          var followingUser = users;
-          var $followingUser = $('<section class="user following"></section>');
-          $followingUser.text('@' + followingUser + '\n').appendTo($following);
-        }
-
         var $feedTitle = $('<h2 class="feed"></h2>');
         $feedTitle.text('Feed');
         $feedTitle.appendTo($body);
@@ -69,7 +56,7 @@
           var user = tweet.user;
           var $user = $('<div class="user"></div>');
 
-          $user.text('@' + tweet.user + ':').attr('data-user');
+          $user.text('@' + tweet.user);
           $tweet.text(tweet.message);
           $createdAt.text(createdAt);
 
@@ -94,7 +81,7 @@
             var newUser = newTweet.user;
             var $newUser = $('<div class="user"></div>');
 
-            $newUser.text('@' + newTweet.user + ':').attr('data-user');
+            $newUser.text('@' + newTweet.user);
             $newTweet.text(newTweet.message);
             $newCreatedAt.text(createdAt);
 
@@ -108,25 +95,46 @@
           }
         })
 
-        $(".user").click(function() {
-          var username = $(this).data('user');
-
-          var $userFeed = $('<div class="userFeed"></div>');
-
-          var $userFeedTitle = $('<h2 class="userFeed"></h2>');
-          $userFeedTitle.text(username + ' \'s Feed');
-          $userFeedTitle.appendTo($body);
-
+        $('.user').click(function() {
           $(".feed").hide();
           $(".newTweets").hide();
           $(".home").show();
+          $(".userFeed").empty().show();
 
+          var username = $(this).text().slice(1);
+          // console.log(this);
+          var userIndex = streams.users[username].length - 1;
+
+          var $userFeed = $('<div class="userFeed"></div>');
+          $userFeed.appendTo($body);
+          var $userFeedTitle = $('<h2 class="userFeed"></h2>');
+          $userFeedTitle.text(username + '\'s Feed');
+          $userFeedTitle.prependTo($userFeed);
+
+          while (userIndex >= 0) {
+              var $userContainer = $('<div class="container"></div>');
+              var userTweet = streams.users[username][userIndex]
+              var $userTweet = $('<div class="tweets"></div>');
+              var userCreatedAt = userTweet.created_at;
+              var $userCreatedAt = $('<div class="createdAt"></div>');
+              var followingUser = userTweet.user;
+              var $followingUser = $('<div class="user"></div>');
+
+              $followingUser.text('@' + userTweet.user);
+              $userTweet.text(userTweet.message);
+              $userCreatedAt.text(userCreatedAt);
+
+              $followingUser.appendTo($userContainer);
+              $userCreatedAt.appendTo($userContainer);
+              $userTweet.appendTo($userContainer);
+
+              $userContainer.appendTo($userFeed);
+
+              userIndex -= 1;
+          }
         })
 
-        $("div").css("margin","auto");
-
     });
-
 
     </script>
   </body>
